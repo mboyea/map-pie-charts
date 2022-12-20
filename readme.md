@@ -10,11 +10,11 @@ This application is built with HTML and JavaScript, using the D3.js rendering li
 * Navigate to index.html in a web browser.
 
 ### Current Term Goals (January 8th 2022)
-Render a D3.js map of the United States
-Create mock data for donut charts
-Implement donut charts at given lat/long locations
-Auto-zoom the map to visible donut charts
-Ensure performance with 1-40 donut charts, even on mobile devices
+Render a D3.js map of the United States  
+Create mock data for donut charts  
+Implement donut charts at given lat/long locations  
+Auto-zoom the map to visible donut charts  
+Ensure performance with 1-40 donut charts, even on mobile devices  
 
 ### References
 D3.js mapping: https://d3-graph-gallery.com/backgroundmap.html
