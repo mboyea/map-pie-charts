@@ -1,4 +1,4 @@
-Map w/ Pie Charts
+🗺️ Map w/ Pie Charts
 ===
 A web application which shows a map with pie charts overlaid on top.
 ---
