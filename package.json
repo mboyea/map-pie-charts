@@ -1,0 +1,14 @@
+{
+  "name": "map-pie-charts",
+  "version": "0.0.0",
+  "description": "A web application which shows a map with pie charts overlaid on top.",
+  "main": "map-pie-chart.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YourZombieMop/map-pie-charts.git"
+  },
+  "homepage": "https://github.com/YourZombieMop/map-pie-charts#readme"
+}
