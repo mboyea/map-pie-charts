@@ -17,10 +17,10 @@ Auto-zoom the map to visible donut charts
 Ensure performance with 1-40 donut charts, even on mobile devices  
 
 ### References
-D3.js mapping: https://d3-graph-gallery.com/backgroundmap.html
-D3.js donut charts: https://d3-graph-gallery.com/donut.html
-D3.js general mapping tutorials: https://mappingwithd3.com/
-Pie/donut chart caveats (blogpiece): https://www.data-to-viz.com/caveat/pie.html
+D3.js mapping: https://d3-graph-gallery.com/backgroundmap.html  
+D3.js donut charts: https://d3-graph-gallery.com/donut.html  
+D3.js general mapping tutorials: https://mappingwithd3.com/  
+Pie/donut chart caveats (blogpiece): https://www.data-to-viz.com/caveat/pie.html  
 
 ### To contribute to this project
 This project doesn't support user contributions.
