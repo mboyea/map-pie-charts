@@ -23,7 +23,7 @@ To run a script, type `npm run <script-name>`
 To edit commands, see "scripts" in package.json
 
 ### Current Term Goals (January 8th 2022)
-Render a D3.js map of the United States  
+✓ Render a D3.js map of the United States  
 Create mock data for donut charts  
 Implement donut charts at given lat/long locations  
 Auto-zoom the map to visible donut charts  
