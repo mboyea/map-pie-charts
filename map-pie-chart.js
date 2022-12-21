@@ -1,4 +1,4 @@
-// renders a map of the USA with pie graphs overlaid on top, zoomed to fit each pie graph within the view
+// renders a map of the USA with donut graphs overlaid on top, zoomed to fit each donut graph within the view
 // @param parent The parent element which the map svg will be injected into
 // @param donutGraphs The donut graph data which the map will display at given lat/long coordinates
 // returns void
