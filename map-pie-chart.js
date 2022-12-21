@@ -1,15 +1,39 @@
-const mapContainer = d3.select('#map');
-const mapSvg = mapContainer.append("svg").attr('width', 800).attr('height', 450);
-const projection = d3.geoMercator()
-d3.json("data/usa-states.json").then((data) => {
-  mapSvg.append("g")
+// renders a map of the USA with pie graphs overlaid on top, zoomed to fit each pie graph within the view
+// @param parent The parent element which the map svg will be injected into
+// @param donutGraphs The donut graph data which the map will display at given lat/long coordinates
+// returns void
+const renderDataMap = (parent, donutGraphs) => {
+  const startTime = Date.now();
+
+  // Calculate viewport properties
+  const projection = d3.geoMercator();
+  const viewBox = '100 50 200 200';
+
+  // Inject svg into parent
+  mapSVG = parent.append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .attr('viewBox', viewBox);
+  
+  // Get USA map data
+  d3.json('data/usa-states.json').then((data) => {
+    // Render USA map
+    mapSVG.append("g")
     .selectAll("path")
     .data(data.features)
     .join("path")
     .attr("fill", "grey")
     .attr("d", d3.geoPath().projection(projection))
     .style("stroke", "none");
-})
+  });
+
+  const endTime = Date.now();
+  console.log(`It took ${endTime - startTime}ms to render the map.`)
+}
+
+renderDataMap(d3.select('#map'));
+
+/* RENDER DONUT GRAPH:
 
 // set the dimensions and margins of the graph
 const width = 450,
@@ -53,8 +77,4 @@ svg
   .attr("stroke", "black")
   .style("stroke-width", "2px")
   .style("opacity", 0.7)
-
-// Map properties:
-// X zoomLevel
-// Svg usaMap (display in site)
-// Svg[] donutGraphs (display on top)
+*/

@@ -24,16 +24,16 @@ To edit commands, see "scripts" in package.json
 
 ### Current Term Goals (January 8th 2022)
 ✓ Render a D3.js map of the United States  
+✓ Move render functionality to a javascript function which injects the map into a given element  
+Render red points supplied to the function at given lat/long locations  
+Zoom the map to show all red points in the screen  
 Create mock data for donut charts  
-Implement donut charts at given lat/long locations  
-Auto-zoom the map to visible donut charts  
+Replace the red points with donut charts  
 Ensure performance with 1-40 donut charts, even on mobile devices  
 
 ### References
-D3.js mapping: https://d3-graph-gallery.com/backgroundmap.html  
-D3.js donut charts: https://d3-graph-gallery.com/donut.html  
+Similar map implementation: https://gist.github.com/mapsam/6090056
 D3.js general mapping tutorials: https://mappingwithd3.com/  
-Pie/donut chart caveats (blogpiece): https://www.data-to-viz.com/caveat/pie.html  
 
 ### To contribute to this project
 This project doesn't support user contributions.
