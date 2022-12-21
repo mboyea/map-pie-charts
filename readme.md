@@ -32,8 +32,10 @@ Replace the red points with donut charts
 Ensure performance with 1-40 donut charts, even on mobile devices  
 
 ### References
-Similar map implementation: https://gist.github.com/mapsam/6090056
-D3.js general mapping tutorials: https://mappingwithd3.com/  
+D3.js basic mapping tutorials: https://mappingwithd3.com/  
+D3.js documentation: https://d3-wiki.readthedocs.io/zh_CN/master/API-Reference/  
+Similar map implementation: https://gist.github.com/mapsam/6090056  
+Another reference project: https://observablehq.com/@d3/testing-projection-visibility  
 
 ### To contribute to this project
 This project doesn't support user contributions.
