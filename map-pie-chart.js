@@ -1,54 +1,73 @@
 /**
- * Renders an svg which contains a map of the USA with graphs overlaid on top, 
- * zoomed to fit each graph within the view
+ * Renders an svg which contains a map with graphs overlaid on top
  * @param parent
  * parent element which the svg will be rendered within
- * @param {{x: number, y: number}} size
- * size of the map svg in pixels
- * @param {{top: number, right: number, bottom: number, left: number}} margin
- * margins of the map svg in pixels
- * @param {{lat: number, long: number}[]} graphData
- * array of graph data which the map will display at given lat/long coordinates
+ * @param mapData
+ * the map source data (GeoJSON format)
+ * @param {number[]} size
+ * [width, height] of the svg
+ * @param {number[]} viewPos
+ * [latitude, longitude] of the view position
+ * @param {number[]} viewOffset
+ * [width, height] pixels offset from the viewPos
+ * (at [0, 0], viewPos is the top left of the view)
+ * @param {number} viewZoom
+ * zoom level of the view
+ * @param {{pos: number[], data: Object}[]} graphData
+ * array of graph data which the map will display at pos [latitude, longitude]
  * @returns {void}
  * nothing
  */
-const renderDataMap = (parent, size, margin, graphData) => {
+const renderDataMap = (
+  parent,
+  mapData,
+  size,
+  viewPos = [-125, 50],
+  viewOffset = [0, 0],
+  viewZoom = 150,
+  graphData = []
+) => {
   const startTime = Date.now();
+
+  // Calculate viewport
+  const projection = d3.geoMercator()
+    .center(viewPos)
+    .translate(viewOffset)
+    .scale(viewZoom)
+  
+  console.log(`Center: ${projection.center()}`);
+  console.log(`Scale: ${projection.scale()}`);
+  console.log(`Rotation: ${projection.rotate()}`);
+  console.log(`Translation: ${projection.translate()}`);
+  console.log(`ClipAngle: ${projection.clipAngle()}`);
+  console.log(`ClipExtent: ${projection.clipExtent()}`);
+  console.log(`Precision: ${projection.precision()}`);
 
   // Inject svg into parent
   mapSVG = parent.append('svg')
     .attr('width', size.x)
     .attr('height', size.y)
 
-  // Get USA map data
-  d3.json('data/usa-states.json').then((data) => {
-    // Calculate viewport properties
-    const projection = d3.geoMercator()
-    projection.fitExtent([
-      [margin.left,margin.top],
-      [size.x-margin.right,size.y-margin.bottom]
-    ],data);
-
-    // Render USA map
-    mapSVG.append("g")
-    .selectAll("path")
-    .data(data.features)
-    .join("path")
-    .attr("fill", "grey")
-    .attr("d", d3.geoPath().projection(projection))
-    .style("stroke", "none");
-  });
+  // Render map
+  mapSVG.append("g")
+  .selectAll("path")
+  .data(mapData.features)
+  .join("path")
+  .attr("fill", "grey")
+  .attr("d", d3.geoPath().projection(projection))
+  .style("stroke", "none");
 
   const endTime = Date.now();
   console.log(`It took ${endTime - startTime}ms to render the map.`)
 }
 
-renderDataMap(
-  d3.select('#map'),
-  {x: 800, y: 450},
-  {top: 0, right: 0, bottom: 0, left: 0},
-  [],
-);
+d3.json('data/usa-states.json').then((map) => {
+  renderDataMap(
+    d3.select('#map'),
+    map,
+    [800, 450],
+  );
+});
 
 /* RENDER DONUT GRAPH:
 

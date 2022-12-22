@@ -32,10 +32,11 @@ Replace the red points with donut charts
 Ensure performance with 1-40 donut charts, even on mobile devices  
 
 ### References
-D3.js basic mapping tutorials: https://mappingwithd3.com/  
+Data source: https://eric.clst.org/tech/usgeojson/ (Puerto Rico, Hawaii, & Alaska were culled)  
 D3.js documentation: https://d3-wiki.readthedocs.io/zh_CN/master/API-Reference/  
-Similar map implementation: https://gist.github.com/mapsam/6090056  
-Another reference project: https://observablehq.com/@d3/testing-projection-visibility  
+Similar MapboxGL map implementation: https://docs.mapbox.com/mapbox-gl-js/example/cluster/
+Similar D3.js map implementation: https://gist.github.com/mapsam/6090056  
+Another D3.js reference project: https://observablehq.com/@d3/testing-projection-visibility  
 
 ### To contribute to this project
 This project doesn't support user contributions.
