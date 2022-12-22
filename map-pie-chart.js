@@ -1,22 +1,34 @@
-// renders a map of the USA with donut graphs overlaid on top, zoomed to fit each donut graph within the view
-// @param parent The parent element which the map svg will be injected into
-// @param donutGraphs The donut graph data which the map will display at given lat/long coordinates
-// returns void
-const renderDataMap = (parent, donutGraphs) => {
+/**
+ * Renders an svg which contains a map of the USA with graphs overlaid on top, 
+ * zoomed to fit each graph within the view
+ * @param parent
+ * parent element which the svg will be rendered within
+ * @param {{x: number, y: number}} size
+ * size of the map svg in pixels
+ * @param {{top: number, right: number, bottom: number, left: number}} margin
+ * margins of the map svg in pixels
+ * @param {{lat: number, long: number}[]} graphData
+ * array of graph data which the map will display at given lat/long coordinates
+ * @returns {void}
+ * nothing
+ */
+const renderDataMap = (parent, size, margin, graphData) => {
   const startTime = Date.now();
-
-  // Calculate viewport properties
-  const projection = d3.geoMercator();
-  const viewBox = '100 50 200 200';
 
   // Inject svg into parent
   mapSVG = parent.append('svg')
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .attr('viewBox', viewBox);
-  
+    .attr('width', size.x)
+    .attr('height', size.y)
+
   // Get USA map data
   d3.json('data/usa-states.json').then((data) => {
+    // Calculate viewport properties
+    const projection = d3.geoMercator()
+    projection.fitExtent([
+      [margin.left,margin.top],
+      [size.x-margin.right,size.y-margin.bottom]
+    ],data);
+
     // Render USA map
     mapSVG.append("g")
     .selectAll("path")
@@ -31,7 +43,12 @@ const renderDataMap = (parent, donutGraphs) => {
   console.log(`It took ${endTime - startTime}ms to render the map.`)
 }
 
-renderDataMap(d3.select('#map'));
+renderDataMap(
+  d3.select('#map'),
+  {x: 800, y: 450},
+  {top: 0, right: 0, bottom: 0, left: 0},
+  [],
+);
 
 /* RENDER DONUT GRAPH:
 
