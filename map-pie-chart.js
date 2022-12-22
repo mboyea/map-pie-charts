@@ -45,8 +45,8 @@ const renderDataMap = (
 
   // Inject svg into parent
   mapSVG = parent.append('svg')
-    .attr('width', size.x)
-    .attr('height', size.y)
+    .attr('width', size[0])
+    .attr('height', size[1])
 
   // Render map
   mapSVG.append("g")
@@ -66,6 +66,13 @@ d3.json('data/usa-states.json').then((map) => {
     d3.select('#map'),
     map,
     [800, 450],
+    [-125, 50],
+    [0, 0],
+    500,
+    [
+      {pos: [-115, 40], data: {}},
+      {pos: [-110, 35], data: {}},
+    ],
   );
 });
 
