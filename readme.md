@@ -23,12 +23,13 @@ To run a script, type `npm run <script-name>`
 To edit commands, see "scripts" in package.json
 
 ### Current Term Goals (January 8th 2022)
-✓ Render a D3.js map of the United States  
-✓ Move render functionality to a javascript function which injects the map into a given element  
-Render red points supplied to the function at given lat/long locations  
-Zoom the map to show all red points in the screen  
-Create mock data for donut charts  
-Replace the red points with donut charts  
+✓ Renders a D3.js map of the United States  
+✓ Map rendering is within a javascript function which injects the map into a given element  
+✓ The render function can move the viewport to specified lat/long coordinates  
+The render function takes in lat/long coordinates and renders red points at those positions  
+Mock data is added  
+The red points are replaced with charts representing the data  
+Styling is at a presentable quality  
 Ensure performance with 1-40 donut charts, even on mobile devices  
 
 ### References
