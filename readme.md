@@ -1,6 +1,6 @@
-🗺️ Map w/ Pie Charts
+🗺️ Map Charts
 ===
-A web application which shows a map with pie charts overlaid on top.
+A web application which shows a map with charts overlaid on top.
 ---
 A simple geographic data visualization example.
 
@@ -18,7 +18,7 @@ To run a script, type `npm run <script-name>`
 
 | script-name | description |
 |:----------- |:----------- |
-| `start` | start a server to host the application |
+| `start` | start a server to host the application locally |
 
 To edit commands, see "scripts" in package.json
 
@@ -30,7 +30,7 @@ To edit commands, see "scripts" in package.json
 ✓ Mock data is added  
 The red points are replaced with charts representing the data  
 Styling is at a presentable quality  
-Ensure performance with 1-40 donut charts, even on mobile devices  
+Ensure performance with 1-40 charts, even on mobile devices  
 
 ### References
 Data source: https://eric.clst.org/tech/usgeojson/ (Puerto Rico, Hawaii, & Alaska were culled)  
