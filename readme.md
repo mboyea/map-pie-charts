@@ -27,7 +27,7 @@ To edit commands, see "scripts" in package.json
 ✓ Map rendering is within a javascript function which injects the map into a given element  
 ✓ The render function can move the viewport to specified lat/long coordinates  
 ✓ The render function takes in lat/long coordinates and renders red points at those positions  
-Mock data is added  
+✓ Mock data is added  
 The red points are replaced with charts representing the data  
 Styling is at a presentable quality  
 Ensure performance with 1-40 donut charts, even on mobile devices  

@@ -13,7 +13,11 @@
  * (at [0, 0], viewPos is the top left of the view)
  * @param {number} viewZoom
  * zoom level of the view
- * @param {{pos: number[], data: Object}[]} graphData
+ * @param {{
+ *    organization: string,
+ *    pos: number[],
+ *    data: {status: string, count: number}[]
+ * }[]} graphData
  * array of graph data which the map will display at pos [longitude, latitude]
  * @returns {void}
  * nothing
@@ -66,7 +70,7 @@ const renderDataMap = (
     .append('circle')
     .attr('cx', (d) => projection(d.pos)[0])
     .attr('cy', (d) => projection(d.pos)[1])
-    .attr('r', 4)
+    .attr('r', 3)
     .attr('fill', 'red')
 
   const endTime = Date.now();
@@ -74,63 +78,17 @@ const renderDataMap = (
 }
 
 // Test
-d3.json('data/usa-states.json').then((map) => {
+const map = d3.json('data/usa-states.json');
+const data = d3.json('data/mock-data.json');
+
+Promise.all([map, data]).then((result) => {
   renderDataMap(
     d3.select('#map'),
-    map,
+    result[0],
     [800, 450],
     [-125, 50],
     [0, 0],
     500,
-    [
-      {pos: [-94.38184912916856, 39.09448345279715], data: {}},
-      {pos: [-110, 35], data: {}},
-    ],
+    result[1],
   );
 });
-
-/* RENDER DONUT GRAPH:
-
-// set the dimensions and margins of the graph
-const width = 450,
-    height = 450,
-    margin = 40;
-
-// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-const radius = Math.min(width, height) / 2 - margin
-
-// append the svg object to the div called 'my_dataviz'
-const svg = d3.select("#donut-chart")
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", `translate(${width / 2},${height / 2})`);
-
-// Create dummy data
-const data = {a: 9, b: 20, c:30, d:8, e:12}
-
-// set the color scale
-const color = d3.scaleOrdinal()
-  .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
-
-// Compute the position of each group on the pie:
-const pie = d3.pie()
-  .value(d=>d[1])
-
-const data_ready = pie(Object.entries(data))
-
-// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-svg
-  .selectAll('whatever')
-  .data(data_ready)
-  .join('path')
-  .attr('d', d3.arc()
-    .innerRadius(100)         // This is the size of the donut hole
-    .outerRadius(radius)
-  )
-  .attr('fill', d => color(d.data[0]))
-  .attr("stroke", "black")
-  .style("stroke-width", "2px")
-  .style("opacity", 0.7)
-*/

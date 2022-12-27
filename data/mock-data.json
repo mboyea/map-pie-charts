@@ -1,0 +1,38 @@
+[
+  {
+    "organization": "Organization Name",
+    "pos": [-94.38184912916856, 39.09448345279715],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "organization": "Atchison",
+    "pos": [-95.11684554457787, 39.53436778133122],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 5
+      },
+      {
+        "status": "CLOSED",
+        "count": 4
+      },
+      {
+        "status": "ON_ICE",
+        "count": 1
+      }
+    ]
+  }
+]
