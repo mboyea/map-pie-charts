@@ -26,7 +26,7 @@ To edit commands, see "scripts" in package.json
 ✓ Renders a D3.js map of the United States  
 ✓ Map rendering is within a javascript function which injects the map into a given element  
 ✓ The render function can move the viewport to specified lat/long coordinates  
-The render function takes in lat/long coordinates and renders red points at those positions  
+✓ The render function takes in lat/long coordinates and renders red points at those positions  
 Mock data is added  
 The red points are replaced with charts representing the data  
 Styling is at a presentable quality  
