@@ -38,8 +38,8 @@ D3.js documentation: https://devdocs.io/d3~7/
 D3.js svg guide: https://observablehq.com/@d3/selection-join  
 Similar MapboxGL map implementation: https://docs.mapbox.com/mapbox-gl-js/example/cluster/  
 Similar D3.js map implementation: https://gist.github.com/mapsam/6090056  
-Another D3.js reference project: https://observablehq.com/@d3/testing-projection-visibility  
-Optimization approach - hide svg and render on a canvas instead, then use svg to test mouse collisions: https://www.mongodb.com/blog/post/d3-round-two-how-blend-html5-canvas-svg-speed-up-rendering  
+Testing if a given point is in view with D3.js: https://observablehq.com/@d3/testing-projection-visibility  
+Optimization approach - hide svg and render on a canvas instead, then use hidden svg to test mouse collisions: https://www.mongodb.com/blog/post/d3-round-two-how-blend-html5-canvas-svg-speed-up-rendering  
 
 ### To contribute to this project
 This project doesn't support user contributions.

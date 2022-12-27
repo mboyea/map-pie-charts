@@ -63,6 +63,7 @@ const renderDataMap = (
       .style('stroke', 'none')
       .attr('d', projectionGeoPath)
 
+  // TODO: create proper data visualization (bubbles)
   // Render data
   svg.selectAll('circle')
     .data(graphData)
