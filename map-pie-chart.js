@@ -7,14 +7,14 @@
  * @param {number[]} size
  * [width, height] of the svg
  * @param {number[]} viewPos
- * [latitude, longitude] of the view position
+ * [longitude, latitude] of the view position
  * @param {number[]} viewOffset
  * [width, height] pixels offset from the viewPos
  * (at [0, 0], viewPos is the top left of the view)
  * @param {number} viewZoom
  * zoom level of the view
  * @param {{pos: number[], data: Object}[]} graphData
- * array of graph data which the map will display at pos [latitude, longitude]
+ * array of graph data which the map will display at pos [longitude, latitude]
  * @returns {void}
  * nothing
  */
@@ -25,7 +25,7 @@ const renderDataMap = (
   viewPos = [-125, 50],
   viewOffset = [0, 0],
   viewZoom = 150,
-  graphData = []
+  graphData = [],
 ) => {
   const startTime = Date.now();
 
@@ -34,6 +34,8 @@ const renderDataMap = (
     .center(viewPos)
     .translate(viewOffset)
     .scale(viewZoom)
+
+  const projectionGeoPath = d3.geoPath().projection(projection);
   
   console.log(`Center: ${projection.center()}`);
   console.log(`Scale: ${projection.scale()}`);
@@ -43,24 +45,35 @@ const renderDataMap = (
   console.log(`ClipExtent: ${projection.clipExtent()}`);
   console.log(`Precision: ${projection.precision()}`);
 
-  // Inject svg into parent
-  mapSVG = parent.append('svg')
+  // Create map
+  svg = parent.append('svg')
     .attr('width', size[0])
     .attr('height', size[1])
+    .append('g')
 
   // Render map
-  mapSVG.append("g")
-  .selectAll("path")
-  .data(mapData.features)
-  .join("path")
-  .attr("fill", "grey")
-  .attr("d", d3.geoPath().projection(projection))
-  .style("stroke", "none");
+  svg.selectAll('path')
+    .data(mapData.features)
+    .join('path')
+      .attr('fill', 'grey')
+      .style('stroke', 'none')
+      .attr('d', projectionGeoPath)
+
+  // Render data
+  svg.selectAll('circle')
+    .data(graphData)
+    .enter()
+    .append('circle')
+    .attr('cx', (d) => projection(d.pos)[0])
+    .attr('cy', (d) => projection(d.pos)[1])
+    .attr('r', 4)
+    .attr('fill', 'red')
 
   const endTime = Date.now();
   console.log(`It took ${endTime - startTime}ms to render the map.`)
 }
 
+// Test
 d3.json('data/usa-states.json').then((map) => {
   renderDataMap(
     d3.select('#map'),
@@ -70,7 +83,7 @@ d3.json('data/usa-states.json').then((map) => {
     [0, 0],
     500,
     [
-      {pos: [-115, 40], data: {}},
+      {pos: [-94.38184912916856, 39.09448345279715], data: {}},
       {pos: [-110, 35], data: {}},
     ],
   );

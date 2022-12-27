@@ -34,10 +34,12 @@ Ensure performance with 1-40 donut charts, even on mobile devices
 
 ### References
 Data source: https://eric.clst.org/tech/usgeojson/ (Puerto Rico, Hawaii, & Alaska were culled)  
-D3.js documentation: https://d3-wiki.readthedocs.io/zh_CN/master/API-Reference/  
-Similar MapboxGL map implementation: https://docs.mapbox.com/mapbox-gl-js/example/cluster/
+D3.js documentation: https://devdocs.io/d3~7/  
+D3.js svg guide: https://observablehq.com/@d3/selection-join  
+Similar MapboxGL map implementation: https://docs.mapbox.com/mapbox-gl-js/example/cluster/  
 Similar D3.js map implementation: https://gist.github.com/mapsam/6090056  
 Another D3.js reference project: https://observablehq.com/@d3/testing-projection-visibility  
+Optimization approach - hide svg and render on a canvas instead, then use svg to test mouse collisions: https://www.mongodb.com/blog/post/d3-round-two-how-blend-html5-canvas-svg-speed-up-rendering  
 
 ### To contribute to this project
 This project doesn't support user contributions.
