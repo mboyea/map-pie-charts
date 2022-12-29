@@ -1,7 +1,7 @@
 [
   {
-    "organization": "Organization Name",
-    "pos": [-94.38184912916856, 39.09448345279715],
+    "address": "1751 S Pointe Ave, Ontario, CA 91761",
+    "pos": [-117.5874669, 34.04111311940036],
     "data": [
       {
         "status": "OPEN",
@@ -18,20 +18,506 @@
     ]
   },
   {
-    "organization": "Atchison",
-    "pos": [-95.11684554457787, 39.53436778133122],
+    "address": "1545 E Locust St, Ontario, CA 91761",
+    "pos": [-117.61823548650764, 34.0463561897516],
     "data": [
       {
         "status": "OPEN",
-        "count": 5
+        "count": 6
       },
       {
         "status": "CLOSED",
-        "count": 4
+        "count": 2
       },
       {
         "status": "ON_ICE",
-        "count": 1
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "11275 Banana Ave, Fontana, CA 92337",
+    "pos": [-117.49659592883587, 34.048857000000005],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "11081 Banana Ave, Fontana, CA 92337",
+    "pos": [-117.4964476, 34.052249821735444],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "10855 Cherry Ave, Fontana, CA 92337",
+    "pos": [-117.48834507116412, 34.0560532],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "8040 N Virginia St #103, Reno, NV 89506",
+    "pos": [-119.8522719, 39.60542833575934],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "6650 Echo Ave d, Reno, NV 89506",
+    "pos": [-119.90011830423428, 39.64883393793239],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "14218 8th St E Suite 200B, Sumner, WA 98390",
+    "pos": [-122.23872392646112, 47.24815017989324],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "2820 B St NW #105, Auburn, WA 98001",
+    "pos": [-122.23081843923588, 47.3322130097908],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "3300 Eagle Pkwy #100, Roanoke, TX 76262",
+    "pos": [-97.28539667116411, 32.99773510181063],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "4000 Dale Earnhardt Blvd #200, Northlake, TX 76262",
+    "pos": [-97.25546561818504, 33.034511388198005],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "8790 Wallisville Rd, Houston, TX 77029",
+    "pos": [-95.272835, 29.78909006661923],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "615 East Sam Houston Pkwy S, Pasadena, TX 77503",
+    "pos": [-95.1524460288359, 29.698168160851967],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "1031 N Redmond Rd, Jacksonville, AR 72076",
+    "pos": [-92.1373115, 34.87303640000001],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "18905 Kill Creek Rd, Edgerton, KS 66021",
+    "pos": [-94.95097784232821, 38.786810300000006],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "19351 Montrose St, Edgerton, KS 66021",
+    "pos": [-94.94000461534355, 38.77615880744717],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "31450 W 196th St Suite B, Edgerton, KS 66021",
+    "pos": [-94.95025277116412, 38.77253799999999],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "6675 Sherman Rd, Atchison, KS 66002",
+    "pos": [-95.116869377739, 39.53439601885633],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "16500 E Truman Rd, Independence, MO 64050",
+    "pos": [-94.38184837491649, 39.09448363842661],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "10901 Hampshire Ave S B, Bloomington, MN 55438",
+    "pos": [-93.36714352883588, 44.805009663383736],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "W210N12855 Gateway Xing, Richfield, WI 53076",
+    "pos": [-88.17185825767177, 43.252360657195446],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "5700 W Bender Ct, Milwaukee, WI 53218",
+    "pos": [-87.98208377038064, 43.129900421926735],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "909 Whitaker Rd Suite 100, Plainfield, IN 46168",
+    "pos": [-86.34833362154937, 39.694026993020586],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "4270 Fritch Dr, Bethlehem, PA 18020",
+    "pos": [-75.34447071032378, 40.6868479320637],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "7542 Morris Ct, Allentown, PA 18106",
+    "pos": [-75.60680529999999, 40.56602619906464],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "6461 Snowdrift Rd, Allentown, PA 18106",
+    "pos": [-75.6078944203432, 40.59672948350366],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "2300 Liberty Dr, Northampton, PA 18067",
+    "pos": [-75.47257474865847, 40.69985787151853],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "3131 Caruso Ct, Orlando, FL 32806",
+    "pos": [-81.37963769999999, 28.50697257193894],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "address": "2600 Shader Rd, Orlando, FL 32804",
+    "pos": [-81.41385007795441, 28.584534499388656],
+    "data": [
+      {
+        "status": "OPEN",
+        "count": 6
+      },
+      {
+        "status": "CLOSED",
+        "count": 2
+      },
+      {
+        "status": "ON_ICE",
+        "count": 2
       }
     ]
   }

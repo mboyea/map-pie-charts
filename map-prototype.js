@@ -63,7 +63,6 @@ const renderDataMap = (
       .style('stroke', 'none')
       .attr('d', projectionGeoPath)
 
-  // TODO: create proper data visualization (bubbles)
   // Render data
   svg.selectAll('circle')
     .data(graphData)
@@ -84,7 +83,7 @@ const data = d3.json('data/mock-data.json');
 
 Promise.all([map, data]).then((result) => {
   renderDataMap(
-    d3.select('#map'),
+    d3.select('#map-display-container'),
     result[0],
     [800, 450],
     [-125, 50],

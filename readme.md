@@ -27,11 +27,12 @@ To edit commands, see "scripts" in package.json
 ✓ (Map Prototype) Map rendering is within a javascript function which injects the map into a given element  
 ✓ The render function can move the viewport to specified lat/long coordinates  
 ✓ The render function takes in lat/long coordinates and renders red points at those positions  
- (Map Display) Map rendering is within a javascript object which manages a map and can update the view & data and rerender performantly
+✓ (Map Display) Map rendering is within a javascript object which manages a map and can update the view properties and data
 ✓ Mock data is added  
- The red points are replaced with charts representing the data  
- Styling is at a presentable quality  
- Ensure performance with 1-40 charts, even on mobile devices  
+Rendered data is clustered into a single datapoint in the middle of the group when zoomed out (points are close together in the view)
+The red points are replaced with charts representing the data  
+Styling is at a presentable quality  
+Ensure performance with 1-40 charts, even on mobile devices  
 
 ### Files
 map-prototype.js  
