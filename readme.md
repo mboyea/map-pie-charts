@@ -28,7 +28,9 @@ To edit commands, see "scripts" in package.json
 ✓ The render function can move the viewport to specified lat/long coordinates  
 ✓ The render function takes in lat/long coordinates and renders red points at those positions  
 ✓ (Map Display) Map rendering is within a javascript object which manages a map and can update the view properties and data
+✓ Map allows for zooming and panning the view
 ✓ Mock data is added  
+Map zooming and panning is performant and smooth
 Rendered data is clustered into a single datapoint in the middle of the group when zoomed out (points are close together in the view)
 The red points are replaced with charts representing the data  
 Styling is at a presentable quality  
