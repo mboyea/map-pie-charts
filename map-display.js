@@ -1,103 +1,117 @@
 /** Handler to manage a displaying map */
 class MapDisplay {
   /**
-   * @param svg
-   * the target svg to render within
-   * @param mapData
-   * map source data (GeoJSON format)
+   * @param svg the target svg to render within
+   * @param mapData map source data (GeoJSON format)
    * @param {{
    *    organization: string,
    *    pos: number[],
    *    data: {status: string, count: number}[]
-   * }[]} graphData
-   * graph source data
-   * @param {number[]} viewPos
-   * [longitude, latitude] position of the view
-   * @param {number[]} viewOffset
-   * [width, height] pixels offset from the viewPos
-   * (at [0, 0], viewPos is the top left of the view)
-   * @param {number} viewZoom
-   * zoom level of the view
+   * }[]} graphData graph source data
+   * @param {number[]} svgSize [width, height] pixels size of the svg
+   * @param {number[]} viewCenter [longitude, latitude] center of the view
+   * @param {number} viewZoom zoom level of the view
    */
   constructor(
     svg,
     mapData,
     graphData = [],
-    viewPos = [-125, 50],
-    viewOffset = [0, 0],
+    svgSize = [300, 150],
+    viewCenter = [-96, 38],
     viewZoom = 500,
   ) {
-    this.setSVG(svg);
-    this.setMapData(mapData);
-    this.setGraphData(graphData);
+    // define default variables
     this.projection = d3.geoMercator();
-    this.setView(viewPos, viewOffset, viewZoom);
+    this.zoom = d3.zoom()
     this.isRendering = false;
     this.isRenderQueued = false;
+
+    // define data data
+    this.setMapData(mapData);
+    this.setGraphData(graphData);
+
+    // prepare svg
+    this.setSVG(svg);
+    this.setView(viewCenter, viewZoom);
+    this.setSVGSize(svgSize);
+    this.initZoom();
   }
-  setSVG(svg) { this.svg = svg; }
   setMapData(mapData) { this.mapData = mapData; }
   setGraphData(graphData) { this.graphData = graphData; }
   /**
-   * Sets the view of the map to a given position and zoom
-   * @param {number[]} pos
-   * [longitude, latitude] position of the view
-   * @param {number[]} offset
-   * [width, height] pixels offset from the viewPos
-   * (at [0, 0], viewPos is the top left of the view)
-   * @param {number} zoom
-   * zoom level of the view
+   * Set a new target svg element
+   * @param svg the target svg to render within
    */
-  setView(pos, offset, zoom) {
+  setSVG(svg) {
+    this.svg = svg;
+    this.svgGroup = svg.append('g')
+      .attr('class', 'map-display-render-group')
+  }
+  /**
+   * Set the svg size
+   * @param {number[]} svgSize [width, height] pixels size of the svg
+   */
+  setSVGSize(svgSize) {
+    // resize svg
+    this.svgSize = svgSize;
+    this.svg
+      .attr('width', svgSize[0])
+      .attr('height', svgSize[1]);
+    // update map translation to make the target location the center of the svg viewport
+    this.projection.translate(this.svgSize.map((n) => { return n/2; }))
+    this.projectionGeoPath = d3.geoPath().projection(this.projection);
+    // update the zoom translation bounds
+    this.zoom.translateExtent([[0, 0], this.svgSize])
+  }
+  /**
+   * @param {number[]} viewCenter [longitude, latitude] center of the view
+   * @param {number} viewZoom zoom level of the view
+   */
+  setView(viewCenter, viewZoom) {
     this.projection
-      .center(pos)
-      .translate(offset)
-      .scale(zoom)
+      .center(viewCenter)
+      .scale(viewZoom)
     this.projectionGeoPath = d3.geoPath().projection(this.projection);
   }
-  setViewPos(pos) {
-    this.projection.center(pos)
-    this.projectionGeoPath = d3.geoPath().projection(this.projection);
+  // TODO: documentation
+  initZoom() {
+    this.zoom
+      .scaleExtent([1, 5])
+      .translateExtent([[0, 0], this.svgSize])
+      .on('zoom', (e) => {
+        this.svgGroup.attr('transform', e.transform);
+      });
+    this.svg.call(this.zoom);
   }
-  setViewOffset(offset) {
-    this.projection.translate(offset)
-    this.projectionGeoPath = d3.geoPath().projection(this.projection);
-  }
-  setViewZoom(zoom) {
-    zoom = Math.max(zoom, 0)
-    this.projection.scale(zoom)
-    this.projectionGeoPath = d3.geoPath().projection(this.projection);
-  }
-  getViewPos() { return this.projection.center(); }
-  getViewOffset() { return this.projection.translate(); }
-  getViewZoom() { return this.projection.scale(); }
   /** Renders the map display inside of the SVG */
   render() {
+    // time
     const startTime = Date.now();
 
-    // Queue overlapping render calls
+    // queue overlapping render calls
     if (this.isRendering) {
       this.isRenderQueued = true;
       return;
     }
     this.isRendering = true;
 
-    // Render map
-    this.svg.selectAll('.map')
+    // render map
+    this.svgGroup.selectAll('.map-display')
     .data(this.mapData.features)
     .join('path')
-      .attr('class', 'map')
-      .attr('fill', 'lightsteelblue')
-      .attr('stroke-width', 0.4)
-      .style('stroke', 'white')
+      .attr('class', 'map-display')
+      .attr('fill', '#EDEDED')
+      .attr('stroke-width', 0.3)
+      .style('stroke', 'darkgrey')
       .attr('d', this.projectionGeoPath)
 
-    // Delete existing data
-    this.svg.selectAll('.data-display')
+    // TODO: find more performant solution for updating data
+    // delete existing data
+    this.svgGroup.selectAll('.data-display')
       .remove()
 
-    // Render data
-    this.svg.selectAll('.data-display')
+    // render data
+    this.svgGroup.selectAll('.data-display')
       .data(this.graphData)
       .enter()
       .append('circle')
@@ -107,42 +121,33 @@ class MapDisplay {
       .attr('r', 1)
       .attr('fill', 'red')
 
-    this.isRendering = false;
+    // end time
     const endTime = Date.now();
     console.log(`It took ${endTime - startTime}ms to render the map.`)
 
-    // Rerender if render is queued
-    if (this.isRenderQueued) {
-      this.render();
-    }
+    // rerender if render is queued
+    this.isRendering = false;
+    if (this.isRenderQueued) this.render();
   }
 }
 
 /* Test MapDisplay */
-// utility functions
-const clamp = (num, min, max) => {
-  return Math.min(Math.max(num, min), max);
-};
-
 // request data
 const map = d3.json('data/usa-states.json');
 const data = d3.json('data/mock-data.json');
 
 // prepare container & svg
 const container = document.querySelector('#map-display-container');
-container.style = 'width: 80vw; height: min(80vh, 50vw); border: solid; margin: 12px auto;';
-let size = [
+container.style = 'width: 80vw; height: min(80vh, 50vw); border: solid; margin:  auto;';
+const svg = d3.select('#map-display-container').append('svg')
+
+// calculate initial view properties
+let svgSize = [
   container.clientWidth,
   container.clientHeight
 ];
-const svg = d3.select('#map-display-container').append('svg')
-  .attr('width', size[0])
-  .attr('height', size[1]);
-
-// calculate initial view properties
-let pos = [-96, 38];
-let offset = size.map((n) => { return n/2; });
-let zoom = 500;
+let viewPos = [-96, 38];
+let viewZoom = 500;
 
 let mapDisplay;
 Promise.all([map, data]).then((result) => {
@@ -150,53 +155,18 @@ Promise.all([map, data]).then((result) => {
     svg,
     result[0],
     result[1],
-    pos,
-    offset,
-    zoom,
+    svgSize,
+    viewPos,
+    viewZoom,
   );
   mapDisplay.render();
 
-  // when the window is resized (update offset)
+  // when the window is resized, update svg to fit container
   addEventListener('resize', (e) => {
     // update svg size to equal its container
-    size = [container.clientWidth, container.clientHeight];
-    svg.attr('width', size[0]).attr('height', size[1]);
-    // update map view center
-    offset = size.map((n) => { return n/2; });
-    mapDisplay.setViewOffset(offset);
-    // rerender the map
+    svgSize = [container.clientWidth, container.clientHeight];
+    mapDisplay.setSVGSize(svgSize);
+    // re-render
     mapDisplay.render();
-  });
-
-  // when a scrollwheel is moved over the container (update zoom)
-  container.onwheel = (e) => {
-    e.preventDefault();
-    // update map zoom
-    const currentZoom = mapDisplay.getViewZoom();
-    zoom = currentZoom - clamp(e.deltaY, -150, 150) * Math.max(0.2, (currentZoom / 400));
-    mapDisplay.setViewZoom(zoom);
-    // rerender the map
-    mapDisplay.render();
-  }
-
-  // when the container is dragged (update pos)
-  const onMapDrag = (e) => {
-    // update map pos
-    const currentPos = mapDisplay.getViewPos();
-    const currentZoom = mapDisplay.getViewZoom();
-    pos = [
-      currentPos[0] - e.movementX / (currentZoom / 40),
-      currentPos[1] + e.movementY / (currentZoom / 40)
-    ];
-    mapDisplay.setViewPos(pos);
-    // rerender the map
-    mapDisplay.render();
-  };
-  container.onmousedown = (e) => {
-    e.preventDefault();
-    addEventListener('mousemove', onMapDrag);
-  }
-  addEventListener('mouseup', (e) => {
-    removeEventListener('mousemove', onMapDrag)
   });
 });

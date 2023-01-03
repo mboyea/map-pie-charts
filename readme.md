@@ -30,8 +30,8 @@ To edit commands, see "scripts" in package.json
 ✓ (Map Display) Map rendering is within a javascript object which manages a map and can update the view properties and data
 ✓ Map allows for zooming and panning the view
 ✓ Mock data is added  
-Map zooming and panning is performant and smooth
-Rendered data is clustered into a single datapoint in the middle of the group when zoomed out (points are close together in the view)
+✓ Map zooming and panning is performant and smooth
+Rendered data is clustered into combined datapoints in the middle of groups when points are close together in the view (zoomed out)
 The red points are replaced with charts representing the data  
 Styling is at a presentable quality  
 Ensure performance with 1-40 charts, even on mobile devices  
