@@ -26,11 +26,11 @@ class MapDisplay {
     this.isRendering = false;
     this.isRenderQueued = false;
 
-    // define data data
+    // define data
     this.setMapData(mapData);
     this.setGraphData(graphData);
 
-    // prepare svg
+    // prepare for rendering
     this.setSVG(svg);
     this.setView(viewCenter, viewZoom);
     this.setSVGSize(svgSize);
