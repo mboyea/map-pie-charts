@@ -1,16 +1,17 @@
 /** Handler to manage a displaying map */
 class MapDisplay {
-  /**
+  /** initialize and render a MapDisplay
    * @param svg the target svg to render within
    * @param mapData map source data (GeoJSON format)
    * @param {{
    *    organization: string,
-   *    pos: number[],
+   *    coords: number[],
    *    data: {status: string, count: number}[]
    * }[]} graphData graph source data
    * @param {number[]} svgSize [width, height] pixels size of the svg
    * @param {number[]} viewCenter [longitude, latitude] center of the view
    * @param {number} viewZoom zoom level of the view
+   * @param {number} dataClusterRange max distance in pixels between clustered points
    */
   constructor(
     svg,
@@ -19,6 +20,7 @@ class MapDisplay {
     svgSize = [300, 150],
     viewCenter = [-96, 38],
     viewZoom = 500,
+    dataClusterRange = 100,
   ) {
     // define default variables
     this.projection = d3.geoMercator();
@@ -26,29 +28,34 @@ class MapDisplay {
     this.isRendering = false;
     this.isRenderQueued = false;
 
-    // define data
+    // define render data
     this.setMapData(mapData);
     this.setGraphData(graphData);
 
     // prepare for rendering
+    this.setDataClusterRange(dataClusterRange);
     this.setSVG(svg);
-    this.setView(viewCenter, viewZoom);
     this.setSVGSize(svgSize);
+    this.setView(viewCenter, viewZoom);
     this.initZoom();
+
+    // render
+    this.render();
   }
   setMapData(mapData) { this.mapData = mapData; }
-  setGraphData(graphData) { this.graphData = graphData; }
-  /**
-   * Set a new target svg element
+  setGraphData(graphData) {
+    this.graphData = graphData;
+    this.renderData = graphData;
+  }
+  /** Set a new target svg element
    * @param svg the target svg to render within
    */
   setSVG(svg) {
     this.svg = svg;
     this.svgGroup = svg.append('g')
-      .attr('class', 'map-display-render-group')
+      .attr('class', 'map-display-group');
   }
-  /**
-   * Set the svg size
+  /** Set the svg size
    * @param {number[]} svgSize [width, height] pixels size of the svg
    */
   setSVGSize(svgSize) {
@@ -61,9 +68,11 @@ class MapDisplay {
     this.projection.translate(this.svgSize.map((n) => { return n/2; }))
     this.projectionGeoPath = d3.geoPath().projection(this.projection);
     // update the zoom translation bounds
-    this.zoom.translateExtent([[0, 0], this.svgSize])
+    this.zoom.translateExtent([[0, 0], this.svgSize]);
+    // cluster data
+    this.clusterDataWithinView();
   }
-  /**
+  /** Set the default view (before user zoom/translation)
    * @param {number[]} viewCenter [longitude, latitude] center of the view
    * @param {number} viewZoom zoom level of the view
    */
@@ -73,37 +82,72 @@ class MapDisplay {
       .scale(viewZoom)
     this.projectionGeoPath = d3.geoPath().projection(this.projection);
   }
-  // TODO: documentation
+  /** Set the max distance between clustered points
+   * @param {number} dataClusterRange max distance in pixels between clustered points
+  */
+  setDataClusterRange(dataClusterRange) {
+    this.dataClusterRange = dataClusterRange;
+  }
+  /** Initialize user zoom functionality for the map */
   initZoom() {
     this.zoom
       .scaleExtent([1, 5])
       .translateExtent([[0, 0], this.svgSize])
       .on('zoom', (e) => {
         this.svgGroup.attr('transform', e.transform);
+        this.clusterDataWithinView();
       });
     this.svg.call(this.zoom);
   }
+  /** Cluster visible data into combined datapoints as renderData */
+  clusterDataWithinView() {
+    // delete existing test
+    this.svgGroup.selectAll('.data-test').remove()
+    // render data
+    this.svgGroup.selectAll('.data-test')
+      .data(this.graphData)
+      .enter()
+      .append('circle')
+      .attr('style', 'visibility: hidden;')
+      .attr('class', 'data-test')
+      .attr('cx', (d) => this.projection(d.coords)[0])
+      .attr('cy', (d) => this.projection(d.coords)[1])
+      .attr('r', 3);
+    
+    this.renderData = [];
+    const data = this.svgGroup.selectAll('.data-test');
+    const dataNodes = data.nodes();
+    const svgRect = this.svg.node().getBoundingClientRect();
+    let dataRect;
+
+    for (let i = 0; i < dataNodes.length; i++) {
+      dataRect = dataNodes[i].getBoundingClientRect();
+      // skip data if it's outside the view
+      if (!(
+        dataRect.x < svgRect.right &&
+        dataRect.right > svgRect.x &&
+        dataRect.y < svgRect.bottom &&
+        dataRect.bottom > svgRect.y
+      )) continue;
+      this.renderData.push({...dataNodes[i].__data__, rect: dataRect});
+      // TODO: consider & mark for clustering
+    }
+    // TODO: run k-means clustering algorithm
+    console.log(this.renderData);
+    // delete test
+    this.svgGroup.selectAll('.data-test').remove()
+  }
   /** Renders the map display inside of the SVG */
   render() {
-    // time
-    const startTime = Date.now();
-
-    // queue overlapping render calls
-    if (this.isRendering) {
-      this.isRenderQueued = true;
-      return;
-    }
-    this.isRendering = true;
-
     // render map
     this.svgGroup.selectAll('.map-display')
-    .data(this.mapData.features)
-    .join('path')
+      .data(this.mapData.features)
+      .join('path')
       .attr('class', 'map-display')
       .attr('fill', '#EDEDED')
       .attr('stroke-width', 0.3)
       .style('stroke', 'darkgrey')
-      .attr('d', this.projectionGeoPath)
+      .attr('d', this.projectionGeoPath);
 
     // TODO: find more performant solution for updating data
     // delete existing data
@@ -112,22 +156,14 @@ class MapDisplay {
 
     // render data
     this.svgGroup.selectAll('.data-display')
-      .data(this.graphData)
+      .data(this.renderData)
       .enter()
       .append('circle')
       .attr('class', 'data-display')
-      .attr('cx', (d) => this.projection(d.pos)[0])
-      .attr('cy', (d) => this.projection(d.pos)[1])
-      .attr('r', 1)
+      .attr('cx', (d) => this.projection(d.coords)[0])
+      .attr('cy', (d) => this.projection(d.coords)[1])
+      .attr('r', 3)
       .attr('fill', 'red')
-
-    // end time
-    const endTime = Date.now();
-    console.log(`It took ${endTime - startTime}ms to render the map.`)
-
-    // rerender if render is queued
-    this.isRendering = false;
-    if (this.isRenderQueued) this.render();
   }
 }
 
@@ -159,7 +195,6 @@ Promise.all([map, data]).then((result) => {
     viewPos,
     viewZoom,
   );
-  mapDisplay.render();
 
   // when the window is resized, update svg to fit container
   addEventListener('resize', (e) => {
