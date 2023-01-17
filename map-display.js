@@ -108,11 +108,20 @@ class MapDisplay {
     this.zoom.scaleExtent(viewZoomRange);
     this.viewZoomRange = viewZoomRange;
   }
+  #isWithinBounds(a, b) {
+    return (
+      a.x < b.right &&
+      a.right > b.x &&
+      a.y < b.bottom &&
+      a.bottom > b.y
+    );
+  }
+  #isWithinDistance(a, b, range) {
+    return false;
+  }
   /** Cluster visible data into combined datapoints as renderData */
   clusterDataWithinView() {
-    // delete existing test
-    this.svgGroup.selectAll('.data-test').remove()
-    // render data
+    // render test data
     this.svgGroup.selectAll('.data-test')
       .data(this.graphData)
       .enter()
@@ -124,27 +133,42 @@ class MapDisplay {
       .attr('r', 3);
     
     this.renderData = [];
+    let clusterData = [];
     const data = this.svgGroup.selectAll('.data-test');
     const dataNodes = data.nodes();
     const svgRect = this.svg.node().getBoundingClientRect();
-    let dataRect;
 
+    // for every datapoint
+    let dataRect, dataCluster, clusterCount = 0;
     for (let i = 0; i < dataNodes.length; i++) {
       dataRect = dataNodes[i].getBoundingClientRect();
-      // skip data if it's outside the view
-      if (!(
-        dataRect.x < svgRect.right &&
-        dataRect.right > svgRect.x &&
-        dataRect.y < svgRect.bottom &&
-        dataRect.bottom > svgRect.y
-      )) continue;
-      // add data to render list
-      this.renderData.push({...dataNodes[i].__data__, rect: dataRect});
-      // TODO: consider & mark for clustering
+
+      // ignore datapoint if it's outside the view
+      if (!this.#isWithinBounds(dataRect, svgRect)) continue;
+
+      // determine whether datapoint is to be clustered (0 for not clustered, a number for a given cluster)
+      dataCluster = 0;
+      // for every currently processed datapoint
+      for (let j = 0; j < clusterData.length; j++) {
+        // if new datapoint is within the data cluster range
+        if (this.#isWithinDistance(dataRect, clusterData[i].rect, this.dataClusterRange)) {
+          // if the already processed datapoint already has a cluster, use that cluster; otherwise, use a new cluster
+          if (clusterData[j].dataCluster != 0)
+            dataCluster = clusterData[j].dataCluster;
+          else {
+            clusterCount++;
+            dataCluster = clusterCount;
+            clusterData[j].dataCluster = clusterCount;
+          }
+        }
+      }
+      // store data for clustering
+      clusterData.push({...dataNodes[i].__data__, rect: dataRect, dataCluster});
     }
-    // TODO: run k-means clustering algorithm
+    // TODO: run k-means clustering algorithm with k=clusterCount and n=??? on clusterData with dataCluster = 0
     console.log(this.renderData);
-    // delete test
+
+    // delete test data
     this.svgGroup.selectAll('.data-test').remove()
   }
   /** Renders the map display inside of the SVG */
