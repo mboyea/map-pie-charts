@@ -10,7 +10,8 @@ class MapDisplay {
    * }[]} graphData graph source data
    * @param {number[]} svgSize [width, height] pixels size of the svg
    * @param {number[]} viewCenter [longitude, latitude] center of the view
-   * @param {number} viewZoom zoom level of the view
+   * @param {number} viewZoom initial zoom level of the view
+   * @param {number[]} viewZoomRange [min, max] zoom level limits
    * @param {number} dataClusterRange max distance in pixels between clustered points
    */
   constructor(
@@ -20,6 +21,7 @@ class MapDisplay {
     svgSize = [300, 150],
     viewCenter = [-96, 38],
     viewZoom = 500,
+    viewZoomRange = [1, 5],
     dataClusterRange = 100,
   ) {
     // define default variables
@@ -37,6 +39,7 @@ class MapDisplay {
     this.setSVG(svg);
     this.setSVGSize(svgSize);
     this.setView(viewCenter, viewZoom);
+    this.setViewZoomRange(viewZoomRange);
     this.initZoom();
 
     // render
@@ -91,13 +94,19 @@ class MapDisplay {
   /** Initialize user zoom functionality for the map */
   initZoom() {
     this.zoom
-      .scaleExtent([1, 5])
       .translateExtent([[0, 0], this.svgSize])
       .on('zoom', (e) => {
         this.svgGroup.attr('transform', e.transform);
         this.clusterDataWithinView();
       });
     this.svg.call(this.zoom);
+  }
+  /** Set the range of user zooming
+   * @param {number[]} viewZoomRange [min, max] zoom level limits
+   */
+  setViewZoomRange(viewZoomRange) {
+    this.zoom.scaleExtent(viewZoomRange);
+    this.viewZoomRange = viewZoomRange;
   }
   /** Cluster visible data into combined datapoints as renderData */
   clusterDataWithinView() {
@@ -129,6 +138,7 @@ class MapDisplay {
         dataRect.y < svgRect.bottom &&
         dataRect.bottom > svgRect.y
       )) continue;
+      // add data to render list
       this.renderData.push({...dataNodes[i].__data__, rect: dataRect});
       // TODO: consider & mark for clustering
     }
