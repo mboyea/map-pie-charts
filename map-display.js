@@ -11,7 +11,7 @@ class MapDisplay {
    * @param {number[]} svgSize [width, height] pixels size of the svg
    * @param {number[]} viewCenter [longitude, latitude] center of the view
    * @param {number} viewZoom initial zoom level of the view
-   * @param {number[]} viewZoomRange [min, max] zoom level limits
+   * @param {number[]} viewZoomRange [min, max] user zoom limits
    * @param {number} dataClusterRange max distance in pixels between clustered points
    */
   constructor(
