@@ -145,7 +145,7 @@ class MapDisplay {
 
       // ignore datapoint if it's outside the view
       if (!this.#isWithinBounds(dataRect, svgRect)) continue;
-
+      /*
       // determine whether datapoint is to be clustered (0 for not clustered, a number for a given cluster)
       dataCluster = 0;
       // for every currently processed datapoint
@@ -161,9 +161,9 @@ class MapDisplay {
             clusterData[j].dataCluster = clusterCount;
           }
         }
-      }
+      }*/
       // store data for clustering
-      clusterData.push({...dataNodes[i].__data__, rect: dataRect, dataCluster});
+      this.renderData.push({...dataNodes[i].__data__, rect: dataRect, dataCluster});
     }
     // TODO: run k-means clustering algorithm with k=clusterCount and n=??? on clusterData with dataCluster = 0
     console.log(this.renderData);
@@ -194,6 +194,7 @@ class MapDisplay {
       .enter()
       .append('circle')
       .attr('class', 'data-display')
+      // TODO: maybe just re-assigning the projection would update data position when map is panned/zoomed
       .attr('cx', (d) => this.projection(d.coords)[0])
       .attr('cy', (d) => this.projection(d.coords)[1])
       .attr('r', 3)
